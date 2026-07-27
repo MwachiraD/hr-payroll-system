@@ -1,4 +1,5 @@
 from database import db
+from sqlalchemy.orm import relationship
 
 
 class Employee(db.Model):
@@ -17,5 +18,16 @@ class Employee(db.Model):
     employment_type = db.Column(db.String(50), nullable=False)
 
     start_date = db.Column(db.Date, nullable=False)
+
+    manager_id = db.Column(
+    db.Integer,
+    db.ForeignKey("employees.id"),
+    nullable=True
+)
+    manager = relationship(
+        "Employee",
+        remote_side=[id],
+        backref="subordinates"
+    )
 
     is_active = db.Column(db.Boolean, default=True)
