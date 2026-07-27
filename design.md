@@ -35,3 +35,24 @@
 - Employee cannot have an overlapping leave , cannot request leave twice in the same period
 - Not more than Half of the team should be on leave simultaneously to avoid understaffing
 - Only approved leave affects payroll
+
+## PayrollRun
+
+- id
+- month
+- year
+- generated_at
+- generated_by
+- status
+
+## Payslip
+
+- id
+- payroll_run_id
+- employee_id
+- gross_pay
+- unpaid_leave_days
+- tax
+- housing levy
+- net_pay
+- generated_at
