@@ -14,6 +14,8 @@ The application aims to help small and growing organizations manage:
 
 The focus of this project is implementing realistic business logic rather than simple CRUD operations.
 
+- Authentication was intentionally omitted to prioritize implementing the core HR workflows. Manager approval is simulated through the approval interface, allowing the business logic to be evaluated independently of user authentication.
+ 
 ## Technology Stack
 
 - Backend: Flask

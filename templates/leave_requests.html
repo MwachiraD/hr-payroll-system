@@ -17,6 +17,7 @@
     <th>Start Date</th>
     <th>End Date</th>
     <th>Status</th>
+    <th>Actions</th>
 </tr>
 
 {% for leave in leave_requests %}
@@ -27,6 +28,18 @@
     <td>{{ leave.start_date }}</td>
     <td>{{ leave.end_date }}</td>
     <td>{{ leave.status }}</td>
+    <td>    
+        {% if leave.status == 'Pending' %}
+            <form method="POST" action="{{ url_for('leave.approve_leave', leave_id=leave.id) }}" style="display:inline;">
+                <button type="submit">Approve</button>
+            </form>
+            <form method="POST" action="{{ url_for('leave.reject_leave', leave_id=leave.id) }}" style="display:inline;">
+                <button type="submit">Reject</button>
+            </form>
+        {% else %}
+            No actions available
+        {% endif %}
+    </td>
 </tr>
 
 {% endfor %}
@@ -35,7 +48,7 @@
 
 {% else %}
 
-<p>No leave requests found.</p>
+<p>No leave requests found.</p>a
 
 {% endif %}
 

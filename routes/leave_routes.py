@@ -49,6 +49,15 @@ def new_leave_request():
                 flash("You already have a leave request that overlaps with this period.", 
                       "error")
                 return redirect(url_for("leave.new_leave_request"))
+
+        requested_days = (end_date - start_date).days + 1
+        employee = Employee.query.get(employee_id)
+        if leave_type == "Annual Leave":
+            if employee.leave_balance < requested_days:
+                flash(
+                    f"you only have {employee.leave_balance} days of annual leave remaining.",
+                       "error")
+                return redirect(url_for("leave.new_leave_request"))
         
         
         leave_request = LeaveRequest(
@@ -64,3 +73,12 @@ def new_leave_request():
 
     employees = Employee.query.all()
     return render_template("new_leave_request.html", employees=employees)
+
+
+@leave_bp.route("/leave_requests/<int:leave_id>/approve", methods=["POST"])
+def approve_leave(leave_id):
+    return " Approve leave functionality to be implemented"
+
+@leave_bp.route("/leave_requests/<int:leave_id>/reject", methods=["POST"])
+def reject_leave(leave_id):
+    return "Reject route works"
