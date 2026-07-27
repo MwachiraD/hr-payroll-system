@@ -21,7 +21,7 @@
 - leave_type
 - reason
 - status
-- approved_by
+- approved_by_manager_id
 - approved_at
 - created_at
 
@@ -36,6 +36,7 @@
 - Not more than Half of the team should be on leave simultaneously to avoid understaffing
 - Only approved leave affects payroll
 - Leave requests older than 14 days without a decision are flagged as overdue on the dashboard.
+- Annual Leave and Unpaid Leave require at least 7 days' notice to allow workforce planning. Sick Leave and Compassionate Leave may begin immediately because they represent unplanned events.
 
 ## PayrollRun
 

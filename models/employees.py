@@ -17,6 +17,12 @@ class Employee(db.Model):
 
     employment_type = db.Column(db.String(50), nullable=False)
 
+    leave_balance = db.Column(
+    db.Integer,
+    nullable=False,
+    default=21
+)
+
     start_date = db.Column(db.Date, nullable=False)
 
     manager_id = db.Column(

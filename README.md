@@ -9,6 +9,8 @@ The application aims to help small and growing organizations manage:
 - Employee records
 - Leave requests and approvals
 - Monthly payroll generation
+- In a production system, sick leave could require a medical certificate for absences longer than three consecutive days. This was noted but left out due to the scope of the challenge
+- For simplicity, each employee starts with an annual leave balance of 21 days. This value can easily be made configurable in a production system."
 
 The focus of this project is implementing realistic business logic rather than simple CRUD operations.
 
