@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employees</title>
+</head>
+<body>
+
+<h1>Employees</h1>
+{% if employees %}
+<table border="1">
+
+    <tr>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Team</th>
+    </tr>
+
+    {% for employee in employees %}
+
+    <tr>
+        <td>{{ employee.name }}</td>
+        <td>{{ employee.role }}</td>
+        <td>{{ employee.team }}</td>
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+{% else %}
+<p>No employees found.</p>
+
+{% endif %} 
+
+</body>
+</html>
