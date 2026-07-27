@@ -17,6 +17,19 @@
 
     <label>Team</label><br>
     <input type="text" name="team"><br><br>
+    <label>Manager</label><br>
+
+    <select name="manager_id">
+
+        <option value="">No Manager</option>
+
+        {% for manager in managers %}
+            <option value="{{ manager.id }}">
+                {{ manager.name }}
+            </option>
+        {% endfor %}
+
+    </select><br><br>
 
     <label>Salary</label><br>
     <input type="number" name="salary"><br><br>
