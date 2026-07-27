@@ -31,6 +31,24 @@ def new_leave_request():
             if notice_days < 7:
                 flash(f"You must give at least 7 days' notice for {leave_type}.", "error")
                 return redirect(url_for("leave.new_leave_request"))
+
+        if leave_type in ["Sick Leave", "Compassionate Leave"]:
+            notice_days = (start_date - today).days
+            if notice_days < 0 or notice_days > 1:
+                flash(f"{leave_type} can only start today or tomorrow.", "error")
+                return redirect(url_for("leave.new_leave_request"))
+
+        existing_leave = LeaveRequest.query.filter(
+            LeaveRequest.employee_id == employee_id,
+            LeaveRequest.status.in_(["Pending", "Approved"]),
+        
+        ).all()
+
+        for leave in existing_leave:
+            if (start_date <= leave.end_date and end_date >= leave.start_date):
+                flash("You already have a leave request that overlaps with this period.", 
+                      "error")
+                return redirect(url_for("leave.new_leave_request"))
         
         
         leave_request = LeaveRequest(

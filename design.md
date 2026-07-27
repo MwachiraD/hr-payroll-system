@@ -37,6 +37,7 @@
 - Only approved leave affects payroll
 - Leave requests older than 14 days without a decision are flagged as overdue on the dashboard.
 - Annual Leave and Unpaid Leave require at least 7 days' notice to allow workforce planning. Sick Leave and Compassionate Leave may begin immediately because they represent unplanned events.
+- An employee cannot request more Annual Leave than their remaining leave balance. which I have set to a maximum 21 days an year
 
 ## PayrollRun
 
