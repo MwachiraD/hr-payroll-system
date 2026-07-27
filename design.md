@@ -35,6 +35,7 @@
 - Employee cannot have an overlapping leave , cannot request leave twice in the same period
 - Not more than Half of the team should be on leave simultaneously to avoid understaffing
 - Only approved leave affects payroll
+- Leave requests older than 14 days without a decision are flagged as overdue on the dashboard.
 
 ## PayrollRun
 
@@ -53,6 +54,6 @@
 - gross_pay
 - unpaid_leave_days
 - tax
-- housing levy
+- housing_levy
 - net_pay
 - generated_at
