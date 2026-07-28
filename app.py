@@ -8,6 +8,7 @@ from models.leave_request import LeaveRequest
 from routes.leave_routes import leave_bp
 from models.payroll_run import PayrollRun
 from models.payslip import Payslip
+from routes.payroll_routes import payroll_bp
 
 
 
@@ -23,7 +24,7 @@ migrate.init_app(app, db)
 
 app.register_blueprint(employee_bp)
 app.register_blueprint(leave_bp)
-
+app.register_blueprint(payroll_bp)
 
 @app.route("/")
 def home():

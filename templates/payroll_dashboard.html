@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payroll Dashboard</title>
+</head>
+
+<body>
+
+<h1>Payroll Dashboard</h1>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+
+<form method="POST" action="{{ url_for('payroll.create_payroll') }}">
+
+    <label>Month</label>
+
+    <input
+        type="number"
+        name="month"
+        min="1"
+        max="12"
+        value="8"
+        required
+    >
+
+    <label>Year</label>
+
+    <input
+        type="number"
+        name="year"
+        value="2026"
+        required
+    >
+
+    <button type="submit">
+        Generate Payroll
+    </button>
+
+</form>
+
+<br>
+
+
+{% if payroll_runs %}
+
+<table border="1">
+
+<tr>
+    <th>ID</th>
+    <th>Month</th>
+    <th>Year</th>
+    <th>Status</th>
+    <th>Payslips</th>
+    <th>Actions</th>
+</tr>
+
+
+{% for payroll in payroll_runs %}
+
+<tr>
+
+    <td>{{ payroll.id }}</td>
+
+    <td>{{ payroll.month }}</td>
+
+    <td>{{ payroll.year }}</td>
+
+    <td>{{ payroll.status }}</td>
+
+    <td>
+        {{ payroll.payslips|length }}
+    </td>
+
+    <td>
+        <a href="{{ url_for('payroll.view_payslips', payroll_id=payroll.id) }}">
+            View Payslips
+        </a>
+    </td>
+
+</tr>
+
+{% endfor %}
+
+
+</table>
+
+
+{% else %}
+
+<p>No payroll runs found.</p>
+
+{% endif %}
+
+
+</body>
+</html>

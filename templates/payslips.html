@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payslips</title>
+</head>
+<body>
+
+<h1>
+    Payslips for {{ payroll.month }}/{{ payroll.year }}
+</h1>
+
+<table border="1">
+
+<tr>
+    <th>Employee</th>
+    <th>Gross Pay</th>
+    <th>Unpaid Leave Days</th>
+    <th>Tax</th>
+    <th>Housing Levy</th>
+    <th>Net Pay</th>
+</tr>
+
+{% for payslip in payroll.payslips %}
+
+<tr>
+
+    <td>{{ payslip.employee.name }}</td>
+    <td>{{ payslip.gross_pay }}</td>
+    <td>{{ payslip.unpaid_leave_days }}</td>
+    <td>{{ payslip.tax }}</td>
+    <td>{{ payslip.housing_levy }}</td>
+    <td>{{ payslip.net_pay }}</td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+</html>

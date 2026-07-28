@@ -3,11 +3,26 @@ from models.payroll_run import PayrollRun
 from models.payslip import Payslip
 from database import db
 from datetime import datetime
+import calendar
 
 
-def calculate_employee_payroll(employee):
+def calculate_employee_payroll(employee , month, year):
+
+    days_in_month = calendar.monthrange(year, month)[1]
 
     gross_pay = employee.salary
+
+    if (
+        employee.start_date.year == year
+        and employee.start_date.month == month
+    ):
+        days_worked = (
+            days_in_month - employee.start_date.day + 1
+       )
+
+        gross_pay = (
+            employee.salary / days_in_month
+        ) * days_worked
 
     unpaid_leave_days = 0
 
@@ -17,6 +32,8 @@ def calculate_employee_payroll(employee):
         if (
             leave.leave_type == "Unpaid Leave"
             and leave.status == "Approved"
+            and leave.start_date.month == month
+            and leave.start_date.year == year
         ):
             days = (leave.end_date - leave.start_date).days + 1
             unpaid_leave_days += days
@@ -55,7 +72,9 @@ def calculate_employee_payroll(employee):
 
 def generate_payslip(employee, payroll_run):
 
-    payroll_data = calculate_employee_payroll(employee)
+    payroll_data = calculate_employee_payroll(
+        employee, payroll_run.month, payroll_run.year
+    )
 
     payslip = Payslip(
         payroll_run_id=payroll_run.id,
