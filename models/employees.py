@@ -37,3 +37,4 @@ class Employee(db.Model):
     )
 
     is_active = db.Column(db.Boolean, default=True)
+

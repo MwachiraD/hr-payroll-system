@@ -8,8 +8,24 @@ leave_bp = Blueprint("leave", __name__, template_folder="templates")
 
 @leave_bp.route("/leave_requests")
 def list_leave_requests():
+
     leave_requests = LeaveRequest.query.all()
-    return render_template("leave_requests.html", leave_requests=leave_requests)
+
+    today = datetime.now().date()
+
+    for leave in leave_requests:
+        leave.is_overdue = False
+
+        if leave.status == "Pending":
+            days_waiting = (today - leave.created_at.date()).days
+
+            if days_waiting > 14:
+                leave.is_overdue = True
+
+    return render_template(
+        "leave_requests.html",
+        leave_requests=leave_requests
+    )
 
 @leave_bp.route("/leave_requests/new", methods=["GET", "POST"])
 def new_leave_request():
@@ -81,6 +97,39 @@ def approve_leave(leave_id):
     if leave.status != "Pending":
       flash("Only pending leave requests can be approved.", "error")
       return redirect(url_for("leave.list_leave_requests"))
+    if leave.leave_type in ["Annual Leave", "Unpaid Leave"]:
+        team_members = Employee.query.filter_by(
+            team=leave.employee.team,
+            is_active=True
+        ).all()
+
+        team_size = len(team_members)
+
+        currently_on_leave = 0
+
+        for member in team_members:
+            for request in member.leave_requests:
+
+                if request.status == "Approved":
+
+                    overlap = (
+                        request.start_date <= leave.end_date
+                        and request.end_date >= leave.start_date
+                    )
+
+                    if overlap:
+                        currently_on_leave += 1
+                        break
+        if currently_on_leave + 1 > team_size / 2:
+            flash(
+                "Cannot approve leave. Too many members of this team would be away.",
+                "error"
+            )
+            return redirect(url_for("leave.list_leave_requests"))
+    
+    
+
+    
     leave.status = "Approved"
     leave.approved_at = datetime.now()
 

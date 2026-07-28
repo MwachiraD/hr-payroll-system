@@ -6,6 +6,13 @@
 <body>
 
 <h1>Leave Requests</h1>
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
 
 {% if leave_requests %}
 
@@ -27,7 +34,11 @@
     <td>{{ leave.leave_type }}</td>
     <td>{{ leave.start_date }}</td>
     <td>{{ leave.end_date }}</td>
-    <td>{{ leave.status }}</td>
+    <td>{{ leave.status }}
+        {% if leave.is_overdue %}
+            <span style="color: red;">(Overdue)</span>
+        {% endif %}
+    </td>
     <td>    
         {% if leave.status == 'Pending' %}
             <form method="POST" action="{{ url_for('leave.approve_leave', leave_id=leave.id) }}" style="display:inline;">
