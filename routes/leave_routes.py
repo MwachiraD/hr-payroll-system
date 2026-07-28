@@ -97,4 +97,17 @@ def approve_leave(leave_id):
 
 @leave_bp.route("/leave_requests/<int:leave_id>/reject", methods=["POST"])
 def reject_leave(leave_id):
-    return "Reject route works"
+
+    leave = LeaveRequest.query.get_or_404(leave_id)
+
+    if leave.status != "Pending":
+        flash("Only pending leave requests can be rejected.", "error")
+        return redirect(url_for("leave.list_leave_requests"))
+
+    leave.status = "Rejected"
+
+    db.session.commit()
+
+    flash("Leave request rejected successfully.", "success")
+
+    return redirect(url_for("leave.list_leave_requests"))
