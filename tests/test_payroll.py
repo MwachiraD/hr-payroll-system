@@ -3,6 +3,7 @@ from models.leave_request import LeaveRequest
 from services.payroll_service import calculate_employee_payroll
 from database import db
 from datetime import date
+from services.payroll_service import generate_payroll
 
 
 def test_unpaid_leave_deduction(app_context):

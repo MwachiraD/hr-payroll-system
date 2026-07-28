@@ -367,6 +367,8 @@ Implemented test cases include:
 - Compassionate leave maximum duration validation
 - Annual leave notice period validation
 - Team coverage protection during leave approvals
+- inactive employee filtering
+- Payroll exclusion of inactive employees while preserving historical payroll records
 
 Run tests with:
 
