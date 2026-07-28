@@ -287,7 +287,7 @@ hr-payroll-system/
 ```bash
 git clone https://github.com/MwachiraD/hr-payroll-system.git
 ```
-
+cd hr-payroll-system
 ## Create virtual environment
 
 ```bash
