@@ -53,6 +53,25 @@ def new_leave_request():
             if notice_days < 0 or notice_days > 1:
                 flash(f"{leave_type} can only start today or tomorrow.", "error")
                 return redirect(url_for("leave.new_leave_request"))
+            if leave_type == "Compassionate Leave":
+                requested_days = (end_date - start_date).days + 1
+
+                if requested_days > 5:
+                    flash(
+                        "Compassionate Leave cannot exceed 5 days.",
+                        "error"
+                    )
+                    return redirect(url_for("leave.new_leave_request"))
+        if leave_type == "Unpaid Leave":
+
+            requested_days = (end_date - start_date).days + 1
+
+            if requested_days > 30:
+                flash(
+                    "Unpaid Leave cannot exceed 30 days.",
+                    "error"
+                )
+                return redirect(url_for("leave.new_leave_request"))
 
         existing_leave = LeaveRequest.query.filter(
             LeaveRequest.employee_id == employee_id,
@@ -62,8 +81,9 @@ def new_leave_request():
 
         for leave in existing_leave:
             if (start_date <= leave.end_date and end_date >= leave.start_date):
-                flash("You already have a leave request that overlaps with this period.", 
-                      "error")
+                flash(f"You already have a {leave.leave_type} request from "
+                        f"{leave.start_date} to {leave.end_date}.",
+                            "error")
                 return redirect(url_for("leave.new_leave_request"))
 
         requested_days = (end_date - start_date).days + 1

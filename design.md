@@ -38,6 +38,15 @@
 - Leave requests older than 14 days without a decision are flagged as overdue on the dashboard.
 - Annual Leave and Unpaid Leave require at least 7 days' notice to allow workforce planning. Sick Leave and Compassionate Leave may begin immediately because they represent unplanned events.
 - An employee cannot request more Annual Leave than their remaining leave balance. which I have set to a maximum 21 days an year
+- Sick and compassionate leave may start immediately or the following day.
+- Approved annual leave reduces employee leave balance.
+- Rejected and pending leave requests do not affect payroll.
+- Pending leave requests older than 14 days are flagged as overdue.
+- Team capacity checks apply only to planned leave types.
+- Annual leave cannot exceed the employee's available leave balance.
+- Sick leave has no fixed maximum duration; extended sick leave may require medical documentation.
+- Compassionate leave is limited to 5 days per request.
+- Unpaid leave is limited to 30 days per request.
 
 ## PayrollRun
 
