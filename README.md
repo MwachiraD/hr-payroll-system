@@ -319,12 +319,14 @@ or python - m pip install -r requirements.txt
 
 flask db upgrade
 
-## Run application
- flask run
- or python app.py
 ## Load sample data
 
 python seed.py
+
+## Run application
+ flask run
+ or python app.py
+
 
 
 
