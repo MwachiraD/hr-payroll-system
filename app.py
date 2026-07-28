@@ -6,6 +6,8 @@ from models.employees import Employee
 from routes.employee_routes import employee_bp
 from models.leave_request import LeaveRequest
 from routes.leave_routes import leave_bp
+from models.payroll_run import PayrollRun
+from models.payslip import Payslip
 
 
 
