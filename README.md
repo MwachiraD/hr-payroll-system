@@ -154,7 +154,11 @@ Each payslip contains:
 
 # Payroll Formula
 
-The payroll calculations use simplified assumptions for demonstration purposes.
+- The payroll calculations use simplified assumptions for demonstration purposes.
+- Monthly salary is prorated for employees who join during the payroll month.
+- Daily salary is calculated using the actual number of days in that month.
+- Gross pay = Monthly salary ÷ Days in month × Eligible working days.
+- Unpaid leave deductions are calculated using the same daily salary approach.
 
 ## Gross Pay
 
@@ -353,14 +357,18 @@ Given more time, the following improvements would be considered:
 
 # Testing
 
-Core business logic was manually tested through:
+The project includes automated tests covering the core HR and payroll business rules.
 
-- Leave approval workflows
-- Leave rejection workflows
-- Team coverage validation
-- Annual leave balance deduction
-- Unpaid leave payroll deductions
-- Monthly payroll generation
-- Payslip creation
+Implemented test cases include:
 
-Automated tests for payroll calculations and leave rules would be the next improvement.
+- Unpaid leave salary deduction
+- Mid-month employee salary proration
+- Payroll calculation with no unpaid leave deductions
+- Compassionate leave maximum duration validation
+- Annual leave notice period validation
+- Team coverage protection during leave approvals
+
+Run tests with:
+
+```bash
+pytest
