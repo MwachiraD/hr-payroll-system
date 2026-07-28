@@ -306,18 +306,33 @@ pip install -r requirements.txt
 
 ---
 
+
+## Configure database
+
+flask db upgrade
+```
 ## Run application
+## Load sample data
+
+python seed.py
 
 ```bash
 flask run
-```
 
 The application will be available at:
 
-```
+
 http://127.0.0.1:5000
 ```
+Database Backup
 
+A SQL dump is included:
+
+database_dump.sql
+
+To recreate the database manually:
+
+sqlite3 hr_payroll.db < database_dump.sql
 ---
 
 # Design Decisions

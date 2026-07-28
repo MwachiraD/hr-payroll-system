@@ -1,12 +1,11 @@
 import sqlite3
 
+conn = sqlite3.connect("hr_payroll.db")
 
-connection = sqlite3.connect("hr_payroll.db")
+with open("database_dump.sql", "w", encoding="utf-8") as f:
+    for line in conn.iterdump():
+        f.write(f"{line}\n")
 
-with open("database_dump.sql", "w") as file:
-    for line in connection.iterdump():
-        file.write(f"{line}\n")
+conn.close()
 
-connection.close()
-
-print("Database dump created successfully.")
+print("Database dump created")
