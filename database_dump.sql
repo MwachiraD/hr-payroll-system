@@ -17,12 +17,13 @@ CREATE TABLE employees (
 	PRIMARY KEY (id), 
 	FOREIGN KEY(manager_id) REFERENCES employees (id)
 );
-INSERT INTO "employees" VALUES(1,'Dennis','SALES Manager','SALES',80000.0,'Full Time','2026-07-28',NULL,1,21);
-INSERT INTO "employees" VALUES(2,'Wachira','IT Manager','IT',80000.0,'Contract','2026-07-28',1,1,21);
+INSERT INTO "employees" VALUES(1,'Dennis','SALES Manager','SALES',80000.0,'Full Time','2026-07-01',NULL,1,21);
+INSERT INTO "employees" VALUES(2,'Wachira','IT Manager','IT',80000.0,'Contract','2026-07-01',1,1,21);
 INSERT INTO "employees" VALUES(3,'Mwangi','Developer','Engineering',90000.0,'Contract','2026-08-15',2,1,21);
-INSERT INTO "employees" VALUES(4,'Wendy','Developer','Engineering',120000.0,'Contract','2026-07-16',2,1,21);
-INSERT INTO "employees" VALUES(5,'Wangari','Developer','Engineering',140000.0,'Contract','2026-07-28',2,1,21);
+INSERT INTO "employees" VALUES(4,'Wendy','Developer','Engineering',120000.0,'Contract','2026-07-16',2,1,16);
+INSERT INTO "employees" VALUES(5,'Wangari','Developer','Engineering',140000.0,'Contract','2026-07-28',2,0,21);
 INSERT INTO "employees" VALUES(6,'Tabby','Sales','Sales',70000.0,'Full Time','2026-07-28',1,0,21);
+INSERT INTO "employees" VALUES(7,'Mbaka','IT','IT',90000.0,'FULL TIME','2026-10-15',2,1,21);
 CREATE TABLE leave_requests (
 	id INTEGER NOT NULL, 
 	employee_id INTEGER NOT NULL, 
@@ -38,7 +39,14 @@ CREATE TABLE leave_requests (
 	FOREIGN KEY(approved_by_manager_id) REFERENCES employees (id), 
 	FOREIGN KEY(employee_id) REFERENCES employees (id)
 );
-INSERT INTO "leave_requests" VALUES(1,4,'2026-08-09','2026-08-14','Annual Leave','Pending','Personal leave',NULL,NULL,'2026-07-28 22:13:10.533876');
+INSERT INTO "leave_requests" VALUES(1,4,'2026-08-10','2026-08-14','Annual Leave','Approved','Family holiday',NULL,'2026-07-29 01:53:05.349107','2026-07-28 22:42:01.077243');
+INSERT INTO "leave_requests" VALUES(2,5,'2026-08-17','2026-08-19','Annual Leave','Approved','Personal commitment',2,NULL,'2026-07-28 22:42:01.077252');
+INSERT INTO "leave_requests" VALUES(3,4,'2026-07-30','2026-07-31','Sick Leave','Approved','Medical appointment',2,NULL,'2026-07-28 22:42:01.077255');
+INSERT INTO "leave_requests" VALUES(4,3,'2026-08-20','2026-08-22','Compassionate Leave','Approved','Family emergency',2,NULL,'2026-07-28 22:42:01.077256');
+INSERT INTO "leave_requests" VALUES(5,4,'2026-07-20','2026-07-24','Unpaid Leave','Approved','Extended personal leave',2,NULL,'2026-07-28 22:42:01.077258');
+INSERT INTO "leave_requests" VALUES(6,1,'2026-08-09','2026-08-14','Annual Leave','Pending','    n/a',NULL,NULL,'2026-07-28 22:48:43.688497');
+INSERT INTO "leave_requests" VALUES(7,1,'2026-07-29','2026-07-30','Sick Leave','Approved','    n/a',NULL,'2026-07-29 01:49:22.738915','2026-07-28 22:49:19.117072');
+INSERT INTO "leave_requests" VALUES(8,7,'2026-11-12','2026-11-20','Unpaid Leave','Approved','    N/A',NULL,'2026-07-29 01:53:00.306578','2026-07-28 22:52:50.982475');
 CREATE TABLE payroll_runs (
 	id INTEGER NOT NULL, 
 	month INTEGER NOT NULL, 
@@ -47,7 +55,10 @@ CREATE TABLE payroll_runs (
 	status VARCHAR(20), 
 	PRIMARY KEY (id)
 );
-INSERT INTO "payroll_runs" VALUES(1,7,2026,'2026-07-29 01:13:10.540089','Completed');
+INSERT INTO "payroll_runs" VALUES(1,7,2026,'2026-07-29 01:42:01.105109','Completed');
+INSERT INTO "payroll_runs" VALUES(2,9,2026,'2026-07-29 01:43:46.958178','Completed');
+INSERT INTO "payroll_runs" VALUES(3,10,2026,'2026-07-29 01:53:35.584908','Completed');
+INSERT INTO "payroll_runs" VALUES(4,11,2026,'2026-07-29 01:53:42.857998','Completed');
 CREATE TABLE payslips (
 	id INTEGER NOT NULL, 
 	payroll_run_id INTEGER NOT NULL, 
@@ -62,4 +73,24 @@ CREATE TABLE payslips (
 	FOREIGN KEY(employee_id) REFERENCES employees (id), 
 	FOREIGN KEY(payroll_run_id) REFERENCES payroll_runs (id)
 );
+INSERT INTO "payslips" VALUES(1,1,1,80000.0,0,8000.0,1200.0,70800.0,'2026-07-29 01:42:01.133059');
+INSERT INTO "payslips" VALUES(2,1,2,80000.0,0,8000.0,1200.0,70800.0,'2026-07-29 01:42:01.138712');
+INSERT INTO "payslips" VALUES(3,1,3,90000.0,0,9000.0,1350.0,79650.0,'2026-07-29 01:42:01.141253');
+INSERT INTO "payslips" VALUES(4,1,4,61935.48,5,5161.29,774.19,45677.42,'2026-07-29 01:42:01.143838');
+INSERT INTO "payslips" VALUES(5,1,5,18064.52,0,1806.45,270.97,15987.1,'2026-07-29 01:42:01.146455');
+INSERT INTO "payslips" VALUES(6,2,1,80000.0,0,8000.0,1200.0,70800.0,'2026-07-29 01:43:47.021568');
+INSERT INTO "payslips" VALUES(7,2,2,80000.0,0,8000.0,1200.0,70800.0,'2026-07-29 01:43:47.040050');
+INSERT INTO "payslips" VALUES(8,2,3,90000.0,0,9000.0,1350.0,79650.0,'2026-07-29 01:43:47.057189');
+INSERT INTO "payslips" VALUES(9,2,4,120000.0,0,12000.0,1800.0,106200.0,'2026-07-29 01:43:47.064923');
+INSERT INTO "payslips" VALUES(10,2,5,140000.0,0,14000.0,2100.0,123900.0,'2026-07-29 01:43:47.071290');
+INSERT INTO "payslips" VALUES(11,3,1,80000.0,0,8000.0,1200.0,70800.0,'2026-07-29 01:53:35.636095');
+INSERT INTO "payslips" VALUES(12,3,2,80000.0,0,8000.0,1200.0,70800.0,'2026-07-29 01:53:35.646261');
+INSERT INTO "payslips" VALUES(13,3,3,90000.0,0,9000.0,1350.0,79650.0,'2026-07-29 01:53:35.660266');
+INSERT INTO "payslips" VALUES(14,3,4,120000.0,0,12000.0,1800.0,106200.0,'2026-07-29 01:53:35.669237');
+INSERT INTO "payslips" VALUES(15,3,7,49354.84,0,4935.48,740.32,43679.03,'2026-07-29 01:53:35.682789');
+INSERT INTO "payslips" VALUES(16,4,1,80000.0,0,8000.0,1200.0,70800.0,'2026-07-29 01:53:42.904837');
+INSERT INTO "payslips" VALUES(17,4,2,80000.0,0,8000.0,1200.0,70800.0,'2026-07-29 01:53:42.915324');
+INSERT INTO "payslips" VALUES(18,4,3,90000.0,0,9000.0,1350.0,79650.0,'2026-07-29 01:53:42.922037');
+INSERT INTO "payslips" VALUES(19,4,4,120000.0,0,12000.0,1800.0,106200.0,'2026-07-29 01:53:42.926608');
+INSERT INTO "payslips" VALUES(20,4,7,90000.0,9,6300.0,945.0,55755.0,'2026-07-29 01:53:42.930498');
 COMMIT;

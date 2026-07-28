@@ -24,15 +24,19 @@ with app.app_context():
     db.session.commit()
 
 
+    # =========================
     # Managers
+    # =========================
+
     dennis = Employee(
         name="Dennis",
         role="SALES Manager",
         team="SALES",
         salary=80000,
         employment_type="Full Time",
-        start_date=date(2026, 7, 28)
+        start_date=date(2026, 7, 1)
     )
+
 
     wachira = Employee(
         name="Wachira",
@@ -40,7 +44,7 @@ with app.app_context():
         team="IT",
         salary=80000,
         employment_type="Contract",
-        start_date=date(2026, 7, 28),
+        start_date=date(2026, 7, 1),
         manager=dennis
     )
 
@@ -53,69 +57,144 @@ with app.app_context():
     db.session.commit()
 
 
+    # =========================
     # Employees
-    employees = [
-        Employee(
-            name="Mwangi",
-            role="Developer",
-            team="Engineering",
-            salary=90000,
-            employment_type="Contract",
-            start_date=date(2026,8,15),
-            manager=wachira
-        ),
+    # =========================
 
-        Employee(
-            name="Wendy",
-            role="Developer",
-            team="Engineering",
-            salary=120000,
-            employment_type="Contract",
-            start_date=date(2026,7,16),
-            manager=wachira
-        ),
-
-        Employee(
-            name="Wangari",
-            role="Developer",
-            team="Engineering",
-            salary=140000,
-            employment_type="Contract",
-            start_date=date(2026,7,28),
-            manager=wachira
-        ),
-
-        Employee(
-            name="Tabby",
-            role="Sales",
-            team="Sales",
-            salary=70000,
-            employment_type="Full Time",
-            start_date=date(2026,7,28),
-            manager=dennis,
-            is_active=False
-        )
-    ]
+    mwangi = Employee(
+        name="Mwangi",
+        role="Developer",
+        team="Engineering",
+        salary=90000,
+        employment_type="Contract",
+        start_date=date(2026, 8, 15),
+        manager=wachira
+    )
 
 
-    db.session.add_all(employees)
+    wendy = Employee(
+        name="Wendy",
+        role="Developer",
+        team="Engineering",
+        salary=120000,
+        employment_type="Contract",
+        start_date=date(2026, 7, 16),
+        manager=wachira
+    )
+
+
+    wangari = Employee(
+        name="Wangari",
+        role="Developer",
+        team="Engineering",
+        salary=140000,
+        employment_type="Contract",
+        start_date=date(2026, 7, 28),
+        manager=wachira
+    )
+
+
+    tabby = Employee(
+        name="Tabby",
+        role="Sales",
+        team="Sales",
+        salary=70000,
+        employment_type="Full Time",
+        start_date=date(2026, 7, 28),
+        manager=dennis,
+        is_active=False
+    )
+
+
+    db.session.add_all([
+        mwangi,
+        wendy,
+        wangari,
+        tabby
+    ])
+
     db.session.commit()
 
 
-    # Leave request example
-    leave = LeaveRequest(
-        employee_id=employees[1].id,
+    # =========================
+    # Leave Requests
+    # =========================
+
+
+    # Pending annual leave
+    annual_pending = LeaveRequest(
+        employee_id=wendy.id,
         leave_type="Annual Leave",
-        start_date=date(2026,8,9),
-        end_date=date(2026,8,14),
+        start_date=date(2026, 8, 10),
+        end_date=date(2026, 8, 14),
         status="Pending",
-        reason="Personal leave"
+        reason="Family holiday"
     )
 
-    db.session.add(leave)
+
+    # Approved annual leave
+    annual_approved = LeaveRequest(
+        employee_id=wangari.id,
+        leave_type="Annual Leave",
+        start_date=date(2026, 8, 17),
+        end_date=date(2026, 8, 19),
+        status="Approved",
+        reason="Personal commitment",
+        approved_by_manager_id=wachira.id
+    )
 
 
-    # Payroll run
+    # Sick leave
+    sick_leave = LeaveRequest(
+        employee_id=wendy.id,
+        leave_type="Sick Leave",
+        start_date=date(2026, 7, 30),
+        end_date=date(2026, 7, 31),
+        status="Approved",
+        reason="Medical appointment",
+        approved_by_manager_id=wachira.id
+    )
+
+
+    # Compassionate leave
+    compassionate_leave = LeaveRequest(
+        employee_id=mwangi.id,
+        leave_type="Compassionate Leave",
+        start_date=date(2026, 8, 20),
+        end_date=date(2026, 8, 22),
+        status="Approved",
+        reason="Family emergency",
+        approved_by_manager_id=wachira.id
+    )
+
+
+    # Unpaid leave - important for payroll deduction testing
+    unpaid_leave = LeaveRequest(
+        employee_id=wendy.id,
+        leave_type="Unpaid Leave",
+        start_date=date(2026, 7, 20),
+        end_date=date(2026, 7, 24),
+        status="Approved",
+        reason="Extended personal leave",
+        approved_by_manager_id=wachira.id
+    )
+
+
+    db.session.add_all([
+        annual_pending,
+        annual_approved,
+        sick_leave,
+        compassionate_leave,
+        unpaid_leave
+    ])
+
+    db.session.commit()
+
+
+    # =========================
+    # Payroll
+    # =========================
+
     payroll = PayrollRun(
         month=7,
         year=2026,
@@ -123,6 +202,24 @@ with app.app_context():
     )
 
     db.session.add(payroll)
+
+    db.session.commit()
+
+
+    # Generate payslips only for active employees
+    active_employees = Employee.query.filter_by(
+        is_active=True
+    ).all()
+
+
+    for employee in active_employees:
+
+        generate_payslip(
+            employee,
+            payroll
+        )
+
+
     db.session.commit()
 
 

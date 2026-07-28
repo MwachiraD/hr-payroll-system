@@ -255,7 +255,7 @@ hr-payroll-system/
 │   ├── leave_request.py
 │   ├── payroll_run.py
 │   └── payslip.py
-│
+│-- database/
 ├── services/
 │   └── payroll_service.py
 │
@@ -266,10 +266,15 @@ hr-payroll-system/
 │   └── dashboard_routes.py
 │
 ├── templates/
+| -- migrations/
 │
 ├── database.py
 ├── app.py
-
+|-- seed.py
+|-- database_dump.sql
+| -- README.md
+| -- config.py
+| --- create_dump.py
 └── requirements.txt
 ```
 
@@ -303,6 +308,8 @@ venv\Scripts\activate
 
 ```bash
 pip install -r requirements.txt
+
+or python - m pip install -r requirements.txt
 ```
 
 ---
@@ -311,21 +318,21 @@ pip install -r requirements.txt
 ## Configure database
 
 flask db upgrade
-```
+
 ## Run application
+ flask run
 ## Load sample data
 
 python seed.py
 
-```bash
-flask run
+
 
 The application will be available at:
 
 
 http://127.0.0.1:5000
-```
-Database Backup
+
+## Database Backup
 
 A SQL dump is included:
 
@@ -334,7 +341,7 @@ database_dump.sql
 To recreate the database manually:
 
 sqlite3 hr_payroll.db < database_dump.sql
----
+
 
 # Design Decisions
 
