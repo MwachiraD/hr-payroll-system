@@ -269,6 +269,7 @@ hr-payroll-system/
 │
 ├── database.py
 ├── app.py
+
 └── requirements.txt
 ```
 
