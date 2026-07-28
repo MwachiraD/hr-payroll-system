@@ -107,7 +107,10 @@ def new_leave_request():
         db.session.commit()
         return redirect(url_for("leave.list_leave_requests"))
 
-    employees = Employee.query.all()
+    employees = Employee.query.filter_by(is_active=True).all()
+    print("ACTIVE EMPLOYEES:")
+    for employee in employees:
+        print(employee.name, employee.is_active)
     return render_template("new_leave_request.html", employees=employees)
 
 

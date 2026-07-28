@@ -101,3 +101,35 @@ def test_employee_with_no_unpaid_leave(app_context):
         assert payroll["gross_pay"] == 80000
 
         assert payroll["net_pay"] > 0
+
+def test_inactive_employee_not_in_payroll(app_context):
+
+    with app_context.app_context():
+
+        employee = Employee(
+            name="Inactive Payroll Employee",
+            role="Developer",
+            team="Engineering",
+            salary=90000,
+            employment_type="Full Time",
+            start_date=date(2026, 7, 1),
+            is_active=False
+        )
+
+        db.session.add(employee)
+        db.session.commit()
+
+
+        payroll = generate_payroll(
+            10,
+            2026
+        )
+
+
+        employee_names = [
+            slip.employee.name
+            for slip in payroll.payslips
+        ]
+
+
+        assert "Inactive Payroll Employee" not in employee_names

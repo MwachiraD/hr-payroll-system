@@ -16,6 +16,7 @@
         <th>Employment Type</th>    
         <th>Start Date</th>
         <th>Status</th>
+        <th>Actions</th>
     </tr>
 
     {% for employee in employees %}
@@ -41,6 +42,27 @@
             {%else%}
                 Inactive
             {%endif%}
+
+        </td>
+        <td>
+
+            {% if employee.is_active %}
+
+            <form
+                action="{{ url_for('employee.deactivate_employee', employee_id=employee.id) }}"
+                method="POST">
+
+               <button type="submit">
+                   Deactivate
+                </button>
+
+            </form>
+
+            {% else %}
+
+                No actions
+
+            {% endif %}
 
         </td>
 

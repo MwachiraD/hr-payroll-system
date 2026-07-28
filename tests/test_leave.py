@@ -153,3 +153,30 @@ def test_annual_leave_requires_notice(app_context):
 
 
         assert notice_days < 7
+
+def test_inactive_employee_not_available_for_leave(app_context):
+
+    with app_context.app_context():
+
+        employee = Employee(
+            name="Inactive Employee",
+            role="Developer",
+            team="Engineering",
+            salary=80000,
+            employment_type="Full Time",
+            start_date=date(2026, 7, 1),
+            is_active=False
+        )
+
+        db.session.add(employee)
+        db.session.commit()
+
+        active_employees = Employee.query.filter_by(
+            is_active=True
+        ).all()
+
+        employee_names = [
+            emp.name for emp in active_employees
+        ]
+
+        assert "Inactive Employee" not in employee_names

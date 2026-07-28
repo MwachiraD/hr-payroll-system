@@ -7,7 +7,7 @@ employee_bp = Blueprint("employee", __name__, template_folder="templates")
 
 @employee_bp.route("/employees")
 def list_employees():
-    employees = Employee.query.all()
+    employees = Employee.query.filter_by(is_active=True).all()
     return render_template("employees.html", employees=employees)
 
 @employee_bp.route("/employees/org")
@@ -47,3 +47,15 @@ def new_employee():
         return redirect(url_for("employee.list_employees"))
     managers = Employee.query.all()
     return render_template("new_employee.html", managers=managers)
+
+
+@employee_bp.route("/employees/<int:employee_id>/deactivate", methods=["POST"])
+def deactivate_employee(employee_id):
+
+    employee = Employee.query.get_or_404(employee_id)
+
+    employee.is_active = False
+
+    db.session.commit()
+
+    return redirect(url_for("employee.list_employees"))
