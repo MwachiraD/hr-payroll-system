@@ -77,7 +77,23 @@ def new_leave_request():
 
 @leave_bp.route("/leave_requests/<int:leave_id>/approve", methods=["POST"])
 def approve_leave(leave_id):
-    return " Approve leave functionality to be implemented"
+    leave = LeaveRequest.query.get_or_404(leave_id)
+    if leave.status != "Pending":
+      flash("Only pending leave requests can be approved.", "error")
+      return redirect(url_for("leave.list_leave_requests"))
+    leave.status = "Approved"
+    leave.approved_at = datetime.now()
+
+    if leave.leave_type == "Annual Leave":
+        requested_days = (leave.end_date - leave.start_date).days + 1
+        employee = leave.employee
+        employee.leave_balance -= requested_days
+
+    db.session.commit()
+
+    flash("Leave request approved successfully.", "success")
+
+    return redirect(url_for("leave.list_leave_requests"))
 
 @leave_bp.route("/leave_requests/<int:leave_id>/reject", methods=["POST"])
 def reject_leave(leave_id):
