@@ -10,6 +10,14 @@ def list_employees():
     employees = Employee.query.all()
     return render_template("employees.html", employees=employees)
 
+@employee_bp.route("/employees/org")
+def org_view():
+    employees = Employee.query.all()
+    return render_template(
+        "org_view.html",
+        employees=employees
+    )
+
 @employee_bp.route("/employees/new", methods=["GET", "POST"])
 def new_employee():
     if request.method == "POST":

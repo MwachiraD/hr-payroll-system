@@ -1,0 +1,130 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>HR Dashboard</h1>
+
+
+<h2>Pending Leave Approvals</h2>
+
+{% if pending_leaves %}
+
+<table border="1">
+
+<tr>
+    <th>Employee</th>
+    <th>Leave Type</th>
+    <th>Start</th>
+    <th>End</th>
+    <th>Status</th>
+</tr>
+
+{% for leave in pending_leaves %}
+
+<tr>
+    <td>{{ leave.employee.name }}</td>
+    <td>{{ leave.leave_type }}</td>
+    <td>{{ leave.start_date }}</td>
+    <td>{{ leave.end_date }}</td>
+    <td>{{ leave.status }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% else %}
+
+<p>No pending leave requests.</p>
+
+{% endif %}
+
+
+
+<h2>Employees Currently On Leave</h2>
+
+{% if employees_on_leave %}
+
+<table border="1">
+
+<tr>
+    <th>Employee</th>
+    <th>Leave Type</th>
+    <th>From</th>
+    <th>To</th>
+</tr>
+
+
+{% for leave in employees_on_leave %}
+
+<tr>
+    <td>{{ leave.employee.name }}</td>
+    <td>{{ leave.leave_type }}</td>
+    <td>{{ leave.start_date }}</td>
+    <td>{{ leave.end_date }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% else %}
+
+<p>No employees are currently on leave.</p>
+
+{% endif %}
+
+
+
+<h2>Leave Balances</h2>
+
+<table border="1">
+
+<tr>
+    <th>Employee</th>
+    <th>Leave Balance</th>
+</tr>
+
+
+{% for employee in employees %}
+
+<tr>
+    <td>{{ employee.name }}</td>
+    <td>{{ employee.leave_balance }} days</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+
+
+<h2>Recent Payroll Runs</h2>
+
+<table border="1">
+
+<tr>
+    <th>ID</th>
+    <th>Month</th>
+    <th>Year</th>
+    <th>Status</th>
+</tr>
+
+
+{% for payroll in payroll_runs %}
+
+<tr>
+    <td>{{ payroll.id }}</td>
+    <td>{{ payroll.month }}</td>
+    <td>{{ payroll.year }}</td>
+    <td>{{ payroll.status }}</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+
+
+{% endblock %}

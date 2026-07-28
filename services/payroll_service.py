@@ -61,7 +61,10 @@ def calculate_employee_payroll(employee , month, year):
         - housing_levy
     )
 
-
+    gross_pay = round(gross_pay, 2)
+    tax = round(tax, 2)
+    housing_levy = round(housing_levy, 2)
+    net_pay = round(net_pay, 2)
     return {
         "gross_pay": gross_pay,
         "unpaid_leave_days": unpaid_leave_days,

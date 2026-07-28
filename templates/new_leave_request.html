@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Request Leave</title>
-</head>
-<body>
 
+{% extends "base.html" %}
+
+{% block content %}
 <h1>Request Leave</h1>
 {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -69,5 +66,5 @@
 
 </form>
 
-</body>
-</html>
+
+{% endblock %}

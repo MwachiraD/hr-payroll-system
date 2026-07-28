@@ -9,6 +9,8 @@ from routes.leave_routes import leave_bp
 from models.payroll_run import PayrollRun
 from models.payslip import Payslip
 from routes.payroll_routes import payroll_bp
+from routes.dashboard_routes import dashboard_bp
+from flask import redirect, url_for
 
 
 
@@ -25,10 +27,11 @@ migrate.init_app(app, db)
 app.register_blueprint(employee_bp)
 app.register_blueprint(leave_bp)
 app.register_blueprint(payroll_bp)
+app.register_blueprint(dashboard_bp)
 
 @app.route("/")
-def home():
-    return render_template("index.html")
+def index():
+    return redirect(url_for("dashboard.dashboard"))
 
 
 if __name__ == "__main__":

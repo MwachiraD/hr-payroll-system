@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HR & Payroll System</title>
+</head>
+
+<body>
+
+<nav>
+
+<a href="{{ url_for('dashboard.dashboard') }}">Dashboard</a> |
+
+<a href="{{ url_for('employee.list_employees') }}">Employees</a> |
+
+<a href="{{ url_for('employee.new_employee') }}">Add Employee</a> |
+
+<a href="{{ url_for('employee.org_view') }}">Organization</a> |
+
+<a href="{{ url_for('leave.list_leave_requests') }}">Leave Requests</a> |
+
+<a href="{{ url_for('leave.new_leave_request') }}">Request Leave</a> |
+
+<a href="{{ url_for('payroll.payroll_dashboard') }}">Payroll</a>
+
+</nav>
+
+<hr>
+
+
+{% block content %}
+
+{% endblock %}
+
+
+</body>
+</html>

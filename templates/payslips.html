@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Payslips</title>
-</head>
-<body>
+
+{% extends "base.html" %}
+
+{% block content %}
 
 <h1>
     Payslips for {{ payroll.month }}/{{ payroll.year }}
@@ -37,5 +35,4 @@
 
 </table>
 
-</body>
-</html>
+{% endblock %}

@@ -68,3 +68,9 @@
 - housing_levy
 - net_pay
 - generated_at
+
+### Edge Cases Handled
+
+- Duplicate payroll generation is prevented.
+- Mid-month employee joining is prorated automatically.
+- Payroll only deducts unpaid leave that belongs to the selected payroll month.

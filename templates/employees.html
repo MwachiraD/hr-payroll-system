@@ -1,9 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Employees</title>
-</head>
-<body>
+
+{% extends "base.html" %}
+
+{% block content %}
 
 <h1>Employees</h1>
 {% if employees %}
@@ -57,5 +55,5 @@
 
 {% endif %} 
 
-</body>
-</html>
+
+{% endblock %}

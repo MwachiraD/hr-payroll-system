@@ -1,0 +1,36 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Organization Structure</h1>
+
+<table border="1">
+
+<tr>
+    <th>Employee</th>
+    <th>Role</th>
+    <th>Team</th>
+    <th>Reports To</th>
+</tr>
+
+{% for employee in employees %}
+
+<tr>
+    <td>{{ employee.name }}</td>
+    <td>{{ employee.role }}</td>
+    <td>{{ employee.team }}</td>
+    <td>
+        {% if employee.manager %}
+            {{ employee.manager.name }}
+        {% else %}
+            -
+        {% endif %}
+    </td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+
+{% endblock %}
